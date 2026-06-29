@@ -4,7 +4,7 @@ on:
   schedule:
     # 매일 오전 6시 (KST = UTC+9, 즉 UTC 21:00 전날)
     - cron: '0 21 * * 0-4'
-  workflow_dispatch:
+  workflow_dispatch:   # 수동 실행 버튼도 활성화
 
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: 패키지 설치
-        run: pip install pykrx pandas
+        run: pip install pykrx pandas finance-datareader
 
       - name: 스크리너 실행
         run: python screener.py
