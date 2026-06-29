@@ -2,9 +2,9 @@ name: Daily Stock Screener
 
 on:
   schedule:
-    # 매일 오전 6시 (KST = UTC+9, 즉 UTC 21:00 전날)
+    # 매일 오전 6시 KST (UTC 21:00 전날)
     - cron: '0 21 * * 0-4'
-  workflow_dispatch:   # 수동 실행 버튼도 활성화
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,9 +23,11 @@ jobs:
           python-version: '3.11'
 
       - name: 패키지 설치
-        run: pip install pykrx pandas finance-datareader
+        run: pip install pandas requests
 
       - name: 스크리너 실행
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: python screener.py
 
       - name: index.html 커밋 & 푸시
